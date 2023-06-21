@@ -1,3 +1,3 @@
-**You'll be able to Schlatt yourself. One day...**
+You'll be able to Schlatt yourself. One day...
 
 [schlatt.me](https://schlatt.me)
