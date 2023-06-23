@@ -36,7 +36,7 @@ to do:
 
 <body>
     <div id="header">
-        <h1 style="float: left; position:absolute; bottom: 0; left: 0;"><b><span definition='/favicon.ico'>schlatt<span>
+        <h1 style="float: left; position:absolute; bottom: 0; left: 0;"><b><span definition='/web/favicon.ico'>schlatt<span>
                         me!</span></b></h1>
         <div id="headerRight">
             <h3 style="position: absolute; bottom: 0; right: 0;">
@@ -70,7 +70,7 @@ to do:
                     def.classList.add('active')
                     if (el.getAttribute('definition').charAt(0) != "/") {
                         def.innerText = el.getAttribute('definition')
-                    } else def.innerHTML = '<img src=' + el.getAttribute(`definition`) + '/>'
+                    } else def.innerHTML = '<img src=' + "'" + el.getAttribute(`definition`) + "'" + '/>'
 
                     def.style.setProperty("--x", where.x); def.style.setProperty("--y", where.y)
                 } else {
