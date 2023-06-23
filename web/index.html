@@ -1,9 +1,108 @@
 <html>
-    <head>
-        <title>Schlatt Me!</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <h1>You'll be able to Schlatt yourself. One day...</h1>
-    </body>
+
+<!--
+to do: 
+- limits are a bit Small. (see vts.html <script>)
+- forms don't actually upload anything
+- tinybuttons across the site honestly just have weird padding. and material icons are awkwardly placed on them too
+- once forms upload stuff, add a progress bar using htmx :)
+-->
+
+<head>
+    <title>Schlatt Me!</title>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Hooray! Google!!! -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 48
+        }
+    </style>
+
+    <script src="lib\1.9.2_dist_htmx.min.js"></script>
+</head>
+
+<body>
+    <div id="header">
+        <h1 style="float: left; position:absolute; bottom: 0; left: 0;"><b><span definition='/favicon.ico'>schlatt<span>
+                        me!</span></b></h1>
+        <div id="headerRight">
+            <h3 style="position: absolute; bottom: 0; right: 0;">
+                <svg fill="#cdd6f4" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path
+                            d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z">
+                        </path>
+                    </g>
+                </svg> created by <u><span definition='backend'>@rudrecciah</span></u> & <u><span
+                        definition='frontend, model'>@ocktoe</span></u>
+            </h3>
+        </div>
+    </div>
+
+    <script>
+        // cursor logic, and stuff (for definitions)
+        var where = {}
+        document.body.insertAdjacentHTML('beforeend', '<div id="definition-box"></div>')
+        window.addEventListener('mousemove', e => where = { x: e.clientX, y: e.clientY })
+
+        setInterval(() => {
+            try {
+                let el = document.elementFromPoint(where.x, where.y)
+                let def = document.getElementById('definition-box')
+
+                if (el.hasAttribute('definition')) {
+                    // make it appear
+                    def.classList.add('active')
+                    if (el.getAttribute('definition').charAt(0) != "/") {
+                        def.innerText = el.getAttribute('definition')
+                    } else def.innerHTML = '<img src=' + el.getAttribute(`definition`) + '/>'
+
+                    def.style.setProperty("--x", where.x); def.style.setProperty("--y", where.y)
+                } else {
+                    // make it not appear
+                    def.classList.remove('active')
+                }
+            } catch (e) { /* actually don't catch it */ }
+        }, 200)
+    </script>
+
+    </br>
+
+    <div id="content">
+        <div id="buttons">
+            <button hx-get="/tts" hx-swap="innerHTML transition:true" hx-target="#content" class="ttsButton"
+                role="button">
+                <div class="spanner"><span class="material-symbols-outlined"
+                        style="font-size:12rem; margin:auto;">edit</span><span class="text">text-to-schlatt</span></div>
+            </button>
+            <button hx-get="/vts" hx-swap="innerHTML transition:true" hx-target="#content" class="ttsButton"
+                role="button">
+                <div class="spanner"><span class="material-symbols-outlined"
+                        style="font-size:12rem; margin: auto;">record_voice_over</span><span
+                        class="text">voice-to-schlatt</span>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- <div id="footer">
+        <img src="https://count.getloli.com/get/@schlattme" alt="moecounter" />
+    </div> it's kind of ugly i'm not going to lie -->
+
+</body>
+
 </html>

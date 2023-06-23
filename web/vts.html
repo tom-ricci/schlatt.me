@@ -1,0 +1,111 @@
+<html>
+
+<head>
+    <title>Schlatt Me!</title>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Hooray! Google!!! -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 48
+        }
+    </style>
+
+    <script src="lib\1.9.2_dist_htmx.min.js"></script>
+</head>
+
+<div id="content">
+    <div id="voiceForm">
+        <input type="file" id="file" accept=".wav, .mp3" onchange="epicChecker()" hidden />
+        <label for="file" class="FAKEbutton" id="FAKEbutton" style="font-size: 1.7rem;"><span
+                class="material-symbols-outlined" style="font-size:3rem;">upload_file</span><span id="fileChooseAThon">
+                choose file</span></label>
+        <div id="textButtons">
+            <p style="display:block; top: 0; transform: translateY(-1rem)">accepts mp3 and wav, 5mb/0:30</p>
+            <button hx-get="/" hx-swap="innerHTML transition:true" hx-target="body" class="back" role="button">
+                <span class="material-symbols-outlined" style="font-size:1rem;">arrow_back_ios_new</span><span
+                    class="text"> back</span>
+            </button>
+            <button class="button" type="submit">
+                <span class="material-symbols-outlined" style="font-size:1rem;">send</span><span class="text">
+                    schlatt me!</span>
+            </button>
+        </div>
+    </div>
+    <script>
+        // right now the limits are 5mb and 0:30. i'm not sure if this is good or not, feel free to mess around
+        // (stuff should probably be written backend for this anyway, but idk how to do that)
+        const delay = ms => new Promise(res => setTimeout(res, ms));
+        let theChooser = document.getElementById("fileChooseAThon")
+        let impostorButton = document.getElementById("FAKEbutton")
+        let byteLimit = '5000000' //5mb
+        let secLimit = '30'
+
+        epicChecker = async () => {
+
+            // step 1: the Size
+            let epicFile = document.getElementById("file").files[0]
+            if (epicFile.size > byteLimit) {
+                console.log("file too big!! attempted size: " + epicFile.size);
+                epicFile.value = "";
+                theChooser.textContent = ` file too big!`; impostorButton.style.color = "var(--red)"
+                await delay(2000)
+                theChooser.textContent = ` choose file`; impostorButton.style.color = "var(--overlay)"
+                return;
+            };
+
+            // step 2: the Audio Length
+
+            computeLength(epicFile).then((value) => {
+                console.log(value.duration)
+                if (value.duration > secLimit) {
+                    console.log('file too long!! attempted length: ' + value.duration)
+                    epicFile.value = "";
+                    theChooser.textContent = ` file too long!`; impostorButton.style.color = "var(--red)"
+                    // setTimeout jumpscare (it won't let me use await)
+                    setTimeout(() => {
+                        theChooser.textContent = ` choose file`; impostorButton.style.color = "var(--overlay)"
+                    }, 2000);
+                    return;
+                }
+
+                // step 3: the Name. this is inside so the other Resolves
+                let fileName = epicFile.name
+                console.log(`selected ${fileName}`)
+                if (fileName.length > 25) {
+                    fileName = fileName.substring(0, 24) + "...";
+                }
+                theChooser.textContent = fileName
+            });
+        };
+
+        // snatched from stackoverflow https://stackoverflow.com/questions/51918459/verify-duration-of-audio-file-before-uploading
+        function computeLength(file) {
+            return new Promise((resolve) => {
+                var objectURL = URL.createObjectURL(file);
+                var mySound = new Audio([objectURL]);
+                mySound.addEventListener("canplaythrough", () => {
+                    URL.revokeObjectURL(objectURL);
+                    resolve({
+                        file,
+                        duration: mySound.duration
+                    });
+                },
+                    false,
+                );
+            });
+        }
+    </script>
+</div>
+
+</html>
