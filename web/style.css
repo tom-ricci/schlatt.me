@@ -204,6 +204,7 @@ label.FAKEbutton {
     transition: 300ms;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 label.FAKEbutton:hover {
