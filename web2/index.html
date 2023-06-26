@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>schlatt me!</title>
+    <link rel="stylesheet" href="./css/normalize.css"/>
+    <link rel="stylesheet" href="./css/style.css"/>
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <script src="./js/htmx.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <h1>schlatt me!</h1>
+      </div>
+      <div>
+        <div class="tabs">
+          <div id="tts" class="tab" tabindex="0" role="button" hx-trigger="load once, click, " hx-get="/hx/tts.html" hx-target="#input">
+            <div class="tab-content">
+              <div>text <i class="material-symbols-outlined">arrow_forward</i> schlatt</div>
+            </div>
+          </div>
+          <div id="vts" class="tab" tabindex="0" role="button" hx-trigger="click" hx-get="/hx/vts.html" hx-target="#input">
+            <div class="tab-content">
+              <div>voice <i class="material-symbols-outlined">arrow_forward</i> schlatt</div>
+            </div>
+          </div>
+          <div id="ats" class="tab" tabindex="0" role="button" hx-trigger="click" hx-get="/hx/ats.html" hx-target="#input">
+            <div class="tab-content">
+              <div>audio <i class="material-symbols-outlined">arrow_forward</i> schlatt</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="input"></div>
+    </div>
+    <script src="./js/main.js"></script>
+  </body>
+</html>

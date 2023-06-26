@@ -1,0 +1,130 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap");
+
+@font-face {
+    font-family: schlatt;
+    src: url("../assets/fonts/windsor-regular.woff2") format("woff2"),
+         url("../assets/fonts/windsor-regular.woff") format("woff");
+}
+
+@font-face {
+    font-family: slat;
+    src: url("../assets/fonts/roobert-regular.woff2") format("woff2"),
+    url("../assets/fonts/roobert-regular.woff") format("woff");
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+            'FILL' 0,
+            'wght' 200,
+            'GRAD' 0,
+            'opsz' 24;
+    font-size: 1em !important;
+    vertical-align: bottom;
+}
+
+:root {
+    --base: #1e1e2e;
+    --mantle: #181825;
+    --crust: #11111b;
+    --surface: #313244;
+    --overlay: #6c7086;
+    --subtext: #a6adc8;
+    --text: #cdd6f4;
+    --sky: #89dceb;
+    --blue: #89b4fa;
+    --teal: #94e2d5;
+    --red: #f38ba8;
+    --gradient: linear-gradient(144deg, var(--sky), var(--teal) 50%, var(--blue));
+}
+
+html {
+    font-family: "slat", sans-serif;
+    background-color: var(--base);
+    color: var(--text);
+    font-size: 28px;
+}
+
+::selection {
+    background-color: var(--surface);
+}
+
+h1 {
+    margin-bottom: 1.5rem;
+    line-height: 2rem;
+    font-family: "schlatt", serif;
+    font-size: 2rem;
+    letter-spacing: 3px;
+}
+
+.container {
+    display: flex;
+    width: 100dvw;
+    height: 100dvh;
+    place-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.tabs {
+    width: fit-content;
+    background-color: var(--mantle);
+    border-radius: 999rem;
+    font-size: 0.7rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    user-select: none;
+}
+
+.tab {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 1px 1px 1px 1px;
+    border-radius: 999rem;
+    cursor: pointer;
+}
+
+.tab.active-tab {
+    background: var(--gradient);
+}
+
+.tab:hover:not(.active-tab) > .tab-content > div, .tab:focus-visible > .tab-content > div {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent
+}
+
+.tab:focus {
+    outline: none;
+}
+
+.tab-content {
+    background-color: var(--mantle);
+    border-radius: 999rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab-content > div {
+    padding: 0.5em 1em;
+}
+
+#input {
+    margin-top: 1.5rem;
+    width: 24rem;
+    height: 6rem;
+}
+
+textarea {
+    width: calc(100% - 1rem);
+    height: 6rem;
+    resize: none;
+    border-radius: 0.7rem;
+    background-color: var(--mantle);
+    color: var(--text);
+    font-size: 0.5rem;
+    padding: 0.5rem;
+}
