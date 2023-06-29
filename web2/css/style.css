@@ -28,7 +28,7 @@
     --crust: #11111b;
     --surface: #313244;
     --overlay: #6c7086;
-    --subtext: #a6adc8;
+    --subtext: #8a90a7;
     --text: #cdd6f4;
     --sky: #89dceb;
     --blue: #89b4fa;
@@ -46,6 +46,37 @@ html {
 
 ::selection {
     background-color: var(--surface);
+}
+
+.header {
+    width: 22rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.header > p {
+    font-size: 0.7rem;
+}
+
+.header > p > a {
+    text-decoration: none;
+    color: unset;
+    position: relative;
+}
+
+.header > p > a::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--gradient);
+    content: "";
+}
+
+.header-divider {
+    flex-grow: 1;
 }
 
 h1 {
@@ -76,11 +107,15 @@ h1 {
     user-select: none;
 }
 
+.tab-divider {
+    width: 0.1rem;
+}
+
 .tab {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    padding: 1px 1px 1px 1px;
+    padding: 1px;
     border-radius: 999rem;
     cursor: pointer;
 }
@@ -115,16 +150,62 @@ h1 {
 #input {
     margin-top: 1.5rem;
     width: 24rem;
-    height: 6rem;
+    height: 7rem;
+    border-radius: 0.7rem;
+    background: var(--overlay)
+}
+
+#input:has(textarea:hover), #input:has(textarea:active), #input:has(textarea:focus), #input:has(textarea:focus-visible),
+#input:has(input:hover), #input:has(input:active), #input:has(input:focus), #input:has(input:focus-visible) {
+    background: var(--gradient);
 }
 
 textarea {
-    width: calc(100% - 1rem);
-    height: 6rem;
+    width: calc(100% - 1rem - 2px);
+    height: calc(6rem - 2px);
+    margin: 1px;
     resize: none;
     border-radius: 0.7rem;
     background-color: var(--mantle);
     color: var(--text);
     font-size: 0.5rem;
     padding: 0.5rem;
+    border: none;
+    outline: none;
+}
+
+textarea::placeholder {
+    color: var(--subtext);
+}
+
+label:has(input) {
+    display: block;
+    width: calc(100% - 1rem - 2px);
+    height: calc(6rem - 2px);
+    margin: 1px;
+    resize: none;
+    border-radius: 0.7rem;
+    background-color: var(--mantle);
+    color: var(--subtext);
+    font-size: 0.5rem;
+    padding: 0.5rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+label:has(input)::placeholder {
+    color: var(--subtext);
+}
+
+label:has(input) > span {
+    display: flex;
+    font-size: 1rem;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+label:has(input) > span > span.material-symbols-outlined {
+    font-size: 2rem !important;
 }
